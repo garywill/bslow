@@ -1,0 +1,51 @@
+{
+    "name": "B Slow",
+    "description": "Use only when you know what you are doing. You are responsible for any behavior and usage consequences.",
+    "manifest_version": 2,
+    "version": "0.1",
+    "homepage_url": "https://garywill.github.io",
+    "developer": {
+        "name": "Garywill"
+    },
+    "permissions": [
+        "webRequest",
+        "webRequestBlocking",
+        "*://*/*",
+        "ws://*/*", 
+        "wss://*/*", 
+        "<all_urls>",  
+        "contextMenus",
+        "tabs",
+        "storage"
+    ],
+    "icons": {
+        "128": "icon.png"
+    },
+    "background": {
+        "page": "background.html"
+    },
+    "browser_action": {
+        "default_icon": "icon_gray.png",
+        "default_title": "B Slow"
+    },
+    "commands": {
+        "_execute_browser_action": {
+            "description": "Click toolbar button"
+        },
+        "toggle_t" : {
+            "description": "Toggle for one tab"
+        },
+        "toggle_h" : {
+            "description": "Toggle for one tab and new tabs opened by it"
+        },
+        "toggle_window" : {
+            "description": "Toggle for one window"
+        },
+        "toggle_global" : {
+            "description": "Toggle globally enable/disable"
+        }
+    },
+    "options_ui": {
+        "page": "options.html"
+    }
+} 
