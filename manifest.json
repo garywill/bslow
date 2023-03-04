@@ -1,8 +1,8 @@
 {
     "name": "B Slow",
-    "description": "Use only when you know what you are doing. You are responsible for any behavior and usage consequences.",
+    "description": "Delay some resources, to make some sites less laggy. Use only when you know what you are doing. You are responsible for any behavior and usage consequences.",
     "manifest_version": 2,
-    "version": "0.1",
+    "version": "0.2",
     "homepage_url": "https://garywill.github.io",
     "developer": {
         "name": "Garywill"
@@ -10,10 +10,11 @@
     "permissions": [
         "webRequest",
         "webRequestBlocking",
-        "*://*/*",
-        "ws://*/*", 
-        "wss://*/*", 
-        "<all_urls>",  
+        "*://*.bilibili.com/*", 
+        "*://*.hdslb.com/*", 
+        "*://*.biliapi.net/*", 
+        "*://*.bilivideo.com/*", 
+        "*://*.bilivideo.cn/*", 
         "contextMenus",
         "tabs",
         "storage"
@@ -44,8 +45,10 @@
         "toggle_global" : {
             "description": "Toggle globally enable/disable"
         }
-    },
-    "options_ui": {
-        "page": "options.html"
+    } ,
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "{a8604615-dd63-4ff1-b0d5-e37df5a61caf}"
+        }
     }
 } 

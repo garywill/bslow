@@ -28,17 +28,18 @@ async function onBeforeSendHeaders(details)
         return;
     
     const resourceType = details.type;
-    if ( [
-            'main_frame', 'stylesheet', 
-            'xmlhttprequest', 
-            'image', 
-            'media', 
+    if ( [                   // 以下不干涉：
+            'main_frame',    // 主体html页面
+            'stylesheet',    // css
+            'xmlhttprequest',   // api和估计是上报检测用的一些
+            'image',    //  图片
+            'media',    //  任意媒体
         ].includes(resourceType) 
     )
         return;
     
     
-    
+    // ------  开始整理基本url对象 --
     const targetUrl = details.url;
     const targetUrlObj = new URL(targetUrl);
     const targetHost = targetUrlObj.hostname;  // host:带端口 hostname:不带端口
@@ -65,7 +66,7 @@ async function onBeforeSendHeaders(details)
         originUrlObj = new URL(originUrl);
         originHost = originUrlObj.hostname;
     }
-    
+    //  -------- 整理基本url对象完成----
     
     // console.debug("here 33");
     
@@ -98,17 +99,19 @@ async function onBeforeSendHeaders(details)
     // console.debug("here 66");
     if ( sfx == 'js' && 
         (
-            filename.includes('core') 
-            || filename.includes('npd') 
+            filename.includes('core')      // core.xxx.js 是核心
+            || filename.includes('npd')    // npd（或helper） xxxx.js 是与播放进度控制有关
         )
     ) 
         return;
         
-    if (['png','avif', 'svg', 'webp'].includes(sfx) )
+    if (['png','avif', 'svg', 'webp'].includes(sfx) )  // 图片 图形 图标的具体资源（有些是由js控制加载的，因此也在对应js之后才出现）
         return;
     
     // return {cancel :true}
-        
+    
+    
+    // 以上应该已经排除完毕。准备延时
     var sleep_t=getRandomTime(14, 22);
     // console.debug(`wait ${sleep_t}ms  ${targetHost}\t ${filename}`)
     await sleep(sleep_t);
