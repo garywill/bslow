@@ -67,7 +67,6 @@ async function setGlobalEnable(){
     
     
     listeners.push([browser.webRequest.onBeforeRequest, onBeforeRequest]);
-    console.debug(888);
     browser.webRequest.onBeforeRequest.addListener(
         onBeforeRequest,
         {
@@ -82,7 +81,17 @@ async function setGlobalEnable(){
         // {urls: ["<all_urls>", "*://*/*", "ws://*/*", "wss://*/*", ]},
         onBeforeRequest_listener_options 
     ); 
-    console.debug(999);
+    
+    
+    listeners.push([browser.webNavigation.onCommitted, onCommitted]);
+    browser.webNavigation.onCommitted.addListener(
+        onCommitted
+        // {
+        //     url: [
+        //         "*://www.bilibili.com/video/*", 
+        //     ], 
+        // }
+    );
     
     
     global_enabled = true;
@@ -304,6 +313,22 @@ function sendTMessageToTab(tabid)
     }); 
 }
 
+
+function onCommitted(details)
+{
+    const tabid = details.tabId;
+    const url = details.url;
+    const frameId = details.frameId;
+    
+    
+    
+    if (frameId>0)
+        return;
+    
+    console.log("webNavigation onCommitted");
+    unsetTab_t(tabid);
+    
+}
 
 browser.commands.onCommand.addListener(async function (command) {
     switch (command) {

@@ -10,6 +10,7 @@
     "permissions": [
         "webRequest",
         "webRequestBlocking",
+        "webNavigation", 
         "*://*.bilibili.com/*", 
         "*://*.hdslb.com/*", 
         "*://*.biliapi.net/*", 

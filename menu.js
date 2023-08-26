@@ -11,7 +11,7 @@ browser.contextMenus.create({
     contexts: ["browser_action"],
     id: "checkbox_t_disable",
     type: type_switch,
-    title: `${str_switch} ${addon_name} on this tab`
+    title: `${str_switch} ${addon_name} on this tab temporarily`
 });
 browser.contextMenus.create({
     contexts: ["browser_action"],
