@@ -85,12 +85,14 @@ async function setGlobalEnable(){
     
     listeners.push([browser.webNavigation.onCommitted, onCommitted]);
     browser.webNavigation.onCommitted.addListener(
-        onCommitted
-        // {
-        //     url: [
-        //         "*://www.bilibili.com/video/*", 
-        //     ], 
-        // }
+        onCommitted, 
+        {
+            url: [
+                {
+                    urlPrefix: "https://www.bilibili.com/video/", 
+                } 
+            ], 
+        }
     );
     
     
