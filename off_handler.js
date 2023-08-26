@@ -316,7 +316,7 @@ function sendTMessageToTab(tabid)
 }
 
 
-function onCommitted(details)
+async function onCommitted(details)
 {
     const tabid = details.tabId;
     const url = details.url;
@@ -327,8 +327,17 @@ function onCommitted(details)
     if (frameId>0)
         return;
     
-    console.log("webNavigation onCommitted");
+    console.log(`webNavigation onCommitted. tabId: ${tabid}`);
     unsetTab_t(tabid);
+    
+    if ( !(await is_off(undefined, tabid) ) )
+    {
+        console.log("navigating to bilibili video page and is_off() returned false. Injecting...")
+        browser.tabs.executeScript(tabid, {
+            runAt: "document_start", 
+            file: 'content.js', 
+        });
+    }
     
 }
 

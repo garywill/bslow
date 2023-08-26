@@ -26,15 +26,6 @@
     "background": {
         "page": "background.html"
     },
-    "content_scripts": [
-        {
-            "matches": [
-                "*://www.bilibili.com/video/*"
-            ],
-            "js": ["content.js"], 
-            "run_at": "document_start"
-        }
-    ],    
     "browser_action": {
         "default_icon": "icon_gray.png",
         "default_title": "B Slow"
