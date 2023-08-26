@@ -40,7 +40,7 @@ async function setEvtsAndTimers()
     
     timerId = setTimeout(onLongTimeReach, 80*1000);
     
-    
+    document.addEventListener("keydown", onKeyDown);
     
     for (var i=0; i<10; i++)
     {
@@ -60,14 +60,21 @@ function clearEvtsAndTimers()
     timerId = null;
     
     
-    
+    document.removeEventListener("keydown", onKeyDown);
     
     try{
         document.querySelector('.video-title').removeEventListener('click', onVideoTitleClick);
     }catch(err) { } 
 }
 
-    
+function onKeyDown(evt)
+{
+    if (evt.key.toUpperCase() == 'Z' && !evt.ctrlKey && !evt.altKey && !evt.metaKey && !evt.shiftKey)
+    {
+        console.log('let go key down.')
+        onShouldTDisable();
+    }
+}
 
 function onVideoTitleClick(evt)
 {
