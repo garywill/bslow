@@ -114,7 +114,19 @@ async function onBeforeSendHeaders(details)
     // 以上应该已经排除完毕。准备延时
     var sleep_t=getRandomTime(14, 22);
     // console.debug(`wait ${sleep_t}ms  ${targetHost}\t ${filename}`)
-    await sleep(sleep_t);
+    var pastT = 0;
+    while(pastT < sleep_t)
+    {
+        if (await is_off(details)) // 如果中途用户禁用
+        {
+            // console.debug("middle way break");
+            await sleep( genRandomNum(300, 1200) );
+            break;
+        }
+        var segT = Math.min( genRandomNum(1400, 2700) , sleep_t - pastT  );
+        await sleep(segT);
+        pastT += segT;
+    }
     // console.debug(`now  ${sleep_t}ms  ${targetHost}\t ${filename}`)
         
 
@@ -122,10 +134,13 @@ async function onBeforeSendHeaders(details)
 
 
 //===================================================
+function genRandomNum(min, max) {
+    return Math.floor ( Math.random() * (max-min+1)  + min ) ;
+}
 function getRandomTime(min, max) { 
     min = min*1000;
     max = max*1000;
-    return Math.floor ( Math.random() * (max-min+1)  + min ) ;
+    return genRandomNum(min, max);
 }
 async function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
