@@ -28,11 +28,7 @@ browser.runtime.onMessage.addListener(async (message, sender) => {
     }
 });
 
-var NOTITLE;
-if (isFirefox)
-    NOTITLE=null
-else if (isChrome)
-    NOTITLE='';
+var NOTITLE=null ;
 
 /* blue icon: normal
 * gray icon or red badge "off": globally off
