@@ -36,6 +36,9 @@ async function onBeforeRequest(details)
         ].includes(resourceType) 
     )
         return;
+        
+    if (details.method != 'GET')
+        return;
     
     
     // ------  开始整理基本url对象 --
