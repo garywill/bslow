@@ -44,7 +44,7 @@ function clearEvtsAndTimers()
 {
     window.removeEventListener('scroll', onWindowScrollEvt);
     
-    clearTimer(timerId);
+    clearTimeout(timerId);
     timerId = null;
 }
 
