@@ -91,7 +91,7 @@ async function onBeforeRequest(details)
     var filename = filename_n_query.split('?')[0]
 
     // console.debug("here 55");
-    if (filename=='web' )
+    if (filename=='web' || filename == 'heartbeat')
         return;
     
     var filenameArr = filename.split('.');
