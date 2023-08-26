@@ -7,7 +7,11 @@ var list_t_disable = []; // tab off list
 
 var listeners = [];
 
-browser.runtime.onMessage.addListener(async (message) => {
+browser.runtime.onMessage.addListener(async (message, sender) => {
+    console.log("background receive message");
+    console.log("message:", message);
+    console.log("sender:", sender);
+    
     if (message.action === 're-globalEnable-if-is-enabled') 
     {
         //console.log("received message re-globalEnable-if-is-enabled");
@@ -16,6 +20,11 @@ browser.runtime.onMessage.addListener(async (message) => {
             unsetGlobalEnable();
             setGlobalEnable();
         }
+    }
+    else if (message.action == 'add_me_to_list_t_disable')
+    {
+        const tabId = sender.tab.id;
+        setTab_t(tabId);
     }
 });
 
