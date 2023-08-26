@@ -2,7 +2,7 @@
     "name": "B Slow",
     "description": "Delay some resources, to make some sites less laggy. Use only when you know what you are doing. You are responsible for any behavior and usage consequences.",
     "manifest_version": 2,
-    "version": "0.3",
+    "version": "0.5",
     "homepage_url": "https://garywill.github.io",
     "developer": {
         "name": "Garywill"
