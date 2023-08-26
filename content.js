@@ -2,7 +2,6 @@
 console.debug('---- B slow content.js----')
 init();
 
-var timerId = null;
 async function init()
 {
     //console.debug(window.tabid);
@@ -14,7 +13,8 @@ async function init()
         window.has_executed = true;
         //console.debug("first inject");
     }
-    set_intervalTimer();
+    
+    
 }
 
 async function first_run()
@@ -24,61 +24,73 @@ async function first_run()
         console.debug("message:", message);
         console.debug("sender:", sender);
         
-        if (message.action == 'cancel_intervalTimer')
+        if (message.action == 'clearEvtsAndTimers')
         {
-            cancel_intervalTimer();
+            clearEvtsAndTimers();
         }
     }); 
+    
+    setEvtsAndTimers();
 }
 
-function cancel_intervalTimer()
+var timerId = null;
+function setEvtsAndTimers()
 {
-    if ( timerId )
-    {
-        console.log('timerId:', timerId, '. Trying to clear it');
-        clearInterval(timerId);
-        timerId = null;
-    }
-}
-async function set_intervalTimer()
-{
-    if ( timerId )
-    {
-        console.warn(`In set_intervalTimer(), timerId is not empty (${timerId}). Trying to cancel it`);
-        cancel_intervalTimer();
-        await sleep(10);
-    }
+    window.addEventListener('scroll', onWindowScrollEvt);
     
-    timerId = setInterval(onIntervalTimeReach, 1500);
-    console.log('timerId = ', timerId);
-    
-    setTimeout(onLongTimeReach, 80*1000);
+    timerId = setTimeout(onLongTimeReach, 80*1000);
 }
-function onIntervalTimeReach() 
+function clearEvtsAndTimers()
 {
-    const playerbox = document.querySelector("#playerWrap");
-    const lineY = playerbox.offsetTop + playerbox.offsetHeight;
-    if ( window.scrollY > lineY )
-    {
+    window.removeEventListener('scroll', onWindowScrollEvt);
+    
+    clearTimer(timerId);
+    timerId = null;
+}
+
+
+
+function onWindowScrollEvt(evt) {
+    if ( judgeScroll() ) {
         console.log("B slow see Y scroll cross line");
         onShouldTDisable();
     }
 }
+function judgeScroll() 
+{
+    const playerbox = document.querySelector("#playerWrap");
+    const lineY = playerbox.offsetTop + playerbox.offsetHeight;
+    
+    if ( window.scrollY > lineY )
+        return true;
+    else 
+        return false;
+}
+
+
+
+
+function onLongTimeReach()
+{
+    console.log("long time reached, clear interval timer");
+    onShouldTDisable();
+}
+
+
+
+
+
 
 function onShouldTDisable()
 {
     chrome.runtime.sendMessage({
         action: 'add_me_to_list_t_disable', 
     });
-    cancel_intervalTimer();
+    clearEvtsAndTimers();
 }
 
-function onLongTimeReach()
-{
-    console.log("long time reached, clear interval timer");
-    cancel_intervalTimer();
-    onShouldTDisable();
-}
+
+
 
 async function sleep(ms) {
     return await (new Promise(resolve => setTimeout(resolve, ms)) ) ;

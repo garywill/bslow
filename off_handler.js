@@ -180,6 +180,8 @@ function setTab_t(tabid) {
         return;
     list_t_disable.push(tabid);
     update_tabBadge(tabid);
+    
+    sendTMessageToTab(tabid);
 }
 function setTab_h(tabid) {
     unsetTab_t(tabid);
@@ -187,6 +189,8 @@ function setTab_h(tabid) {
         return;
     list_h_disable.push(tabid);
     update_tabBadge(tabid);
+    
+    sendTMessageToTab(tabid);
 }
 function normalizeTab(tabid){
     unsetTab_t(tabid);
@@ -294,6 +298,14 @@ async function is_off(details, tabid, tab, wid, changeInfo){
     if( isWindowDisabled( wid ) ) 
         return true;
 
+}
+
+
+function sendTMessageToTab(tabid)
+{
+    browser.tabs.sendMessage(tabid, {   
+        action: 'clearEvtsAndTimers', 
+    }); 
 }
 
 
