@@ -34,11 +34,23 @@ async function first_run()
 }
 
 var timerId = null;
-function setEvtsAndTimers()
+async function setEvtsAndTimers()
 {
     window.addEventListener('scroll', onWindowScrollEvt);
     
     timerId = setTimeout(onLongTimeReach, 80*1000);
+    
+    
+    
+    for (var i=0; i<10; i++)
+    {
+        await sleep(2000);
+        try{
+            document.querySelector('.video-title').addEventListener('click', onVideoTitleClick);       
+            console.log("successfully added videotitle ele click event");
+            break;
+        }catch(err) { }
+    }
 }
 function clearEvtsAndTimers()
 {
@@ -46,8 +58,21 @@ function clearEvtsAndTimers()
     
     clearTimeout(timerId);
     timerId = null;
+    
+    
+    
+    
+    try{
+        document.querySelector('.video-title').removeEventListener('click', onVideoTitleClick);
+    }catch(err) { } 
 }
 
+    
+
+function onVideoTitleClick(evt)
+{
+    onShouldTDisable();
+}
 
 
 function onWindowScrollEvt(evt) {
