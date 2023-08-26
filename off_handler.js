@@ -322,13 +322,18 @@ async function onCommitted(details)
     const url = details.url;
     const frameId = details.frameId;
     
-    
-    
     if (frameId>0)
         return;
     
     console.log(`webNavigation onCommitted. tabId: ${tabid}`);
     unsetTab_t(tabid);
+    
+    if (url.includes('#reply'))
+    { 
+        console.log('url contains "#reply". tabId:', tabid)
+        setTab_t(tabid);
+        return;
+    } 
     
     if ( !(await is_off(undefined, tabid) ) )
     {
