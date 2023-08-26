@@ -9,8 +9,8 @@ var listeners = [];
 
 browser.runtime.onMessage.addListener(async (message, sender) => {
     console.log("background receive message");
-    console.log("message:", message);
-    console.log("sender:", sender);
+    // console.log("message:", message);
+    // console.log("sender:", sender);
     
     if (message.action === 're-globalEnable-if-is-enabled') 
     {
@@ -310,7 +310,7 @@ async function is_off(details, tabid, tab, wid, changeInfo){
 
 function sendTMessageToTab(tabid)
 {
-    browser.tabs.sendMessage(tabid, {   
+    browser.tabs.sendMessage(tabid, {  // 不要用await，因为可能发不出 
         action: 'clearEvtsAndTimers', 
     }); 
 }

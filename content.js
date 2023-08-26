@@ -21,8 +21,8 @@ async function first_run()
 {
     browser.runtime.onMessage.addListener( async function(message, sender) { 
         console.debug("content script received message");
-        console.debug("message:", message);
-        console.debug("sender:", sender);
+        // console.debug("message:", message);
+        // console.debug("sender:", sender);
         
         if (message.action == 'clearEvtsAndTimers')
         {
