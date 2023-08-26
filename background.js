@@ -19,10 +19,9 @@ setGlobalEnable();
 * Chrome: initiator (can be string 'null')
 */
 
-
-async function onBeforeSendHeaders(details)
+async function onBeforeRequest(details)
 {
-    // console.debug("onBeforeSendHeaders()", details.tabId, details.type , details.url);
+    // console.debug("onBeforeRequest()", details.tabId, details.type , details.url);
     
     if ( await is_off(details) ) 
         return;

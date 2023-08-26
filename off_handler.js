@@ -54,20 +54,17 @@ async function setGlobalEnable(){
     if ( global_enabled == true ) 
         return;
     
-    var onBeforeSendHeaders_listener_options; 
-    if (isFirefox)
-        onBeforeSendHeaders_listener_options = ["blocking", "requestHeaders"];
-    if (isChrome)
-        onBeforeSendHeaders_listener_options = ["blocking", "requestHeaders", "extraHeaders"];
+    var onBeforeRequest_listener_options; 
+    onBeforeRequest_listener_options = ["blocking"];
     
     
     
     
     
-    listeners.push([browser.webRequest.onBeforeSendHeaders, onBeforeSendHeaders]);
+    listeners.push([browser.webRequest.onBeforeRequest, onBeforeRequest]);
     console.debug(888);
-    browser.webRequest.onBeforeSendHeaders.addListener(
-        onBeforeSendHeaders,
+    browser.webRequest.onBeforeRequest.addListener(
+        onBeforeRequest,
         {
             urls: [
                 "*://*.bilibili.com/*", 
@@ -78,7 +75,7 @@ async function setGlobalEnable(){
             ] , 
         },
         // {urls: ["<all_urls>", "*://*/*", "ws://*/*", "wss://*/*", ]},
-        onBeforeSendHeaders_listener_options 
+        onBeforeRequest_listener_options 
     ); 
     console.debug(999);
     
